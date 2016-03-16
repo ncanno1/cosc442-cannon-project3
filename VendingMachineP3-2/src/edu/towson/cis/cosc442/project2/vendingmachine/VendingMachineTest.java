@@ -1,6 +1,7 @@
 package edu.towson.cis.cosc442.project2.vendingmachine;
 
 import org.junit.*;
+
 import static org.junit.Assert.*;
 
 /**
@@ -18,6 +19,13 @@ public class VendingMachineTest {
 	 *
 	 * @generatedBy CodePro at 3/16/16 4:41 PM
 	 */
+	
+	VendingMachine vm1;
+	VendingMachine vm2;
+	VendingMachineItem vmi;
+	boolean exceptionThrown;
+	double balance;
+	
 	@Test
 	public void testVendingMachine_1()
 		throws Exception {
@@ -107,6 +115,20 @@ public class VendingMachineTest {
 		fixture.addItem(item, code);
 
 		// add additional test code here
+	}
+	
+	/*
+	 * Testing adding item into slot A when full
+	 * Should throw an exception
+	 */
+	@Test
+	public void testAddItemAFull() {
+		try {
+			vm2.addItem(vmi, "A");
+		} catch (VendingMachineException e) {
+			exceptionThrown = true;
+		}
+		assertTrue(exceptionThrown);
 	}
 
 	/**
@@ -285,6 +307,29 @@ public class VendingMachineTest {
 		// add additional test code here
 		assertTrue(result);
 	}
+	
+	/*
+	 * Testing if the balance updates correctly when making a purchase
+	 * Should return the current balance
+	 */
+	@Test
+	public void testMakePurchaseBalance() {
+		vm2.insertMoney(3.0);
+		vm2.makePurchase("C");
+		balance = balance + 3.0 - 1.5;
+		assertEquals(balance, vm2.getBalance(), .001);
+	}
+	
+	/*
+	 * Testing if the item gets removed when making a purchase
+	 * Should successfully remove the item
+	 */
+	@Test
+	public void testMakePurchaseRemove() {
+		vm2.insertMoney(3.0);
+		vm2.makePurchase("C");
+		assertNull(vm2.getItem("C"));
+	}
 
 	/**
 	 * Run the VendingMachineItem removeItem(String) method test.
@@ -345,6 +390,16 @@ public class VendingMachineTest {
 		// add additional test code here
 		assertNotNull(result);
 	}
+	
+	@Test
+	public void testRemoveItemANull() {
+		try {
+			vm1.removeItem("A");
+		} catch (VendingMachineException e) {
+			exceptionThrown = true;
+		}
+		assertTrue(exceptionThrown);
+	}
 
 	/**
 	 * Run the double returnChange() method test.
@@ -377,6 +432,15 @@ public class VendingMachineTest {
 	public void setUp()
 		throws Exception {
 		// add additional set up code here
+		vm1 = new VendingMachine();
+		vm2 = new VendingMachine();
+		vm2.addItem(new VendingMachineItem("item1", 1.00), "A");
+		vm2.addItem(new VendingMachineItem("item2", 1.25), "B");
+		vm2.addItem(new VendingMachineItem("item3", 1.50), "C");
+		vm2.addItem(new VendingMachineItem("item1", 1.75), "D");
+		vmi = new VendingMachineItem("item", 2.00);
+		exceptionThrown = false;
+		balance = vm1.getBalance();
 	}
 
 	/**
