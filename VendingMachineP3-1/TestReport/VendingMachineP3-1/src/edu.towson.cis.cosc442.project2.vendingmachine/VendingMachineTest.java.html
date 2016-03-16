@@ -1,0 +1,380 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>VendingMachineTest.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">VendingMachineP3-1 (Mar 16, 2016 3:52:19 PM)</a> &gt; <a href="../../index.html" class="el_group">VendingMachineP3-1</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">edu.towson.cis.cosc442.project2.vendingmachine</a> &gt; <span class="el_source">VendingMachineTest.java</span></div><h1>VendingMachineTest.java</h1><pre class="source lang-java linenums">package edu.towson.cis.cosc442.project2.vendingmachine;
+
+import static org.junit.Assert.*;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
+<span class="fc" id="L9">public class VendingMachineTest {</span>
+	
+	VendingMachine vm1;
+	VendingMachine vm2;
+	VendingMachineItem vmi;
+	boolean exceptionThrown;
+	double balance;
+
+	@Before
+	public void setUp() throws Exception {
+<span class="fc" id="L19">		vm1 = new VendingMachine();</span>
+<span class="fc" id="L20">		vm2 = new VendingMachine();</span>
+<span class="fc" id="L21">		vm2.addItem(new VendingMachineItem(&quot;item1&quot;, 1.00), &quot;A&quot;);</span>
+<span class="fc" id="L22">		vm2.addItem(new VendingMachineItem(&quot;item2&quot;, 1.25), &quot;B&quot;);</span>
+<span class="fc" id="L23">		vm2.addItem(new VendingMachineItem(&quot;item3&quot;, 1.50), &quot;C&quot;);</span>
+<span class="fc" id="L24">		vm2.addItem(new VendingMachineItem(&quot;item1&quot;, 1.75), &quot;D&quot;);</span>
+<span class="fc" id="L25">		vmi = new VendingMachineItem(&quot;item&quot;, 2.00);</span>
+<span class="fc" id="L26">		exceptionThrown = false;</span>
+<span class="fc" id="L27">		balance = vm1.getBalance();</span>
+<span class="fc" id="L28">	}</span>
+
+	@After
+	public void tearDown() throws Exception {
+<span class="fc" id="L32">		vm1 = null;</span>
+<span class="fc" id="L33">		vm2 = null;</span>
+<span class="fc" id="L34">		vmi = null;</span>
+<span class="fc" id="L35">	}</span>
+
+	/*
+	 * Testing adding item into slot A
+	 * Should add the item to the specified slot
+	 */
+	@Test
+	public void testAddItemA() {
+<span class="fc" id="L43">		vm1.addItem(vmi, &quot;A&quot;);</span>
+<span class="fc" id="L44">		assertEquals(vmi, vm1.getItem(&quot;A&quot;));</span>
+<span class="fc" id="L45">	}</span>
+	
+	/*
+	 * Testing adding item into slot B
+	 * Should add the item to the specified slot
+	 */
+	@Test
+	public void testAddItemB() {
+<span class="fc" id="L53">		vm1.addItem(vmi, &quot;B&quot;);</span>
+<span class="fc" id="L54">		assertEquals(vmi, vm1.getItem(&quot;B&quot;));</span>
+<span class="fc" id="L55">	}</span>
+	
+	/*
+	 * Testing adding item into slot C
+	 * Should add the item to the specified slot
+	 */
+	@Test
+	public void testAddItemC() {
+<span class="fc" id="L63">		vm1.addItem(vmi, &quot;C&quot;);</span>
+<span class="fc" id="L64">		assertEquals(vmi, vm1.getItem(&quot;C&quot;));</span>
+<span class="fc" id="L65">	}</span>
+	
+	/*
+	 * Testing adding item into slot D
+	 * Should add the item to the specified slot
+	 */
+	@Test
+	public void testAddItemD() {
+<span class="fc" id="L73">		vm1.addItem(vmi, &quot;D&quot;);</span>
+<span class="fc" id="L74">		assertEquals(vmi, vm1.getItem(&quot;D&quot;));</span>
+<span class="fc" id="L75">	}</span>
+	
+	/*
+	 * Testing adding item into slot A when full
+	 * Should throw an exception
+	 */
+	@Test
+	public void testAddItemAFull() {
+		try {
+<span class="nc" id="L84">			vm2.addItem(vmi, &quot;A&quot;);</span>
+<span class="pc" id="L85">		} catch (VendingMachineException e) {</span>
+<span class="fc" id="L86">			exceptionThrown = true;</span>
+		}
+<span class="fc" id="L88">		assertTrue(exceptionThrown);</span>
+<span class="fc" id="L89">	}</span>
+	
+	/*
+	 * Testing adding item into slot B when full
+	 * Should throw an exception
+	 */
+	@Test
+	public void testAddItemBFull() {
+		try {
+<span class="nc" id="L98">			vm2.addItem(vmi, &quot;B&quot;);</span>
+<span class="pc" id="L99">		} catch (VendingMachineException e) {</span>
+<span class="fc" id="L100">			exceptionThrown = true;</span>
+		}
+<span class="fc" id="L102">		assertTrue(exceptionThrown);</span>
+<span class="fc" id="L103">	}</span>
+	
+	/*
+	 * Testing adding item into slot C when full
+	 * Should throw an exception
+	 */
+	@Test
+	public void testAddItemCFull() {
+		try {
+<span class="nc" id="L112">			vm2.addItem(vmi, &quot;C&quot;);</span>
+<span class="pc" id="L113">		} catch (VendingMachineException e) {</span>
+<span class="fc" id="L114">			exceptionThrown = true;</span>
+		}
+<span class="fc" id="L116">		assertTrue(exceptionThrown);</span>
+<span class="fc" id="L117">	}</span>
+	
+	/*
+	 * Testing adding item into slot D when full
+	 * Should throw an exception
+	 */
+	@Test
+	public void testAddItemDFull() {
+		try {
+<span class="nc" id="L126">			vm2.addItem(vmi, &quot;D&quot;);</span>
+<span class="pc" id="L127">		} catch (VendingMachineException e) {</span>
+<span class="fc" id="L128">			exceptionThrown = true;</span>
+		}
+<span class="fc" id="L130">		assertTrue(exceptionThrown);</span>
+<span class="fc" id="L131">	}</span>
+	
+	/*
+	 * Testing adding item with an invalid code
+	 * Should throw an exception
+	 */
+	@Test
+	public void testAddItemInvalidCode() {
+		try {
+<span class="nc" id="L140">			vm2.addItem(vmi, &quot;X&quot;);</span>
+<span class="pc" id="L141">		} catch (VendingMachineException e) {</span>
+<span class="fc" id="L142">			exceptionThrown = true;</span>
+		}
+<span class="fc" id="L144">		assertTrue(exceptionThrown);</span>
+<span class="fc" id="L145">	}</span>
+	
+	/*
+	 * Testing removing an item from slot A
+	 * Should set the slot to null
+	 */
+	@Test
+	public void testRemoveItemA() {
+<span class="fc" id="L153">		vm2.removeItem(&quot;A&quot;);</span>
+<span class="fc" id="L154">		assertNull(vm2.getItem(&quot;A&quot;));</span>
+<span class="fc" id="L155">	}</span>
+	
+	/*
+	 * Testing removing an item from slot B
+	 * Should set the slot to null
+	 */
+	@Test
+	public void testRemoveItemB() {
+<span class="fc" id="L163">		vm2.removeItem(&quot;B&quot;);</span>
+<span class="fc" id="L164">		assertNull(vm2.getItem(&quot;B&quot;));</span>
+<span class="fc" id="L165">	}</span>
+	
+	/*
+	 * Testing removing an item from slot C
+	 * Should set the slot to null
+	 */
+	@Test
+	public void testRemoveItemC() {
+<span class="fc" id="L173">		vm2.removeItem(&quot;C&quot;);</span>
+<span class="fc" id="L174">		assertNull(vm2.getItem(&quot;C&quot;));</span>
+<span class="fc" id="L175">	}</span>
+	
+	/*
+	 * Testing removing an item from slot D
+	 * Should set the slot to null
+	 */
+	@Test
+	public void testRemoveItemD() {
+<span class="fc" id="L183">		vm2.removeItem(&quot;D&quot;);</span>
+<span class="fc" id="L184">		assertNull(vm2.getItem(&quot;D&quot;));</span>
+<span class="fc" id="L185">	}</span>
+	
+	/*
+	 * Testing removing an item that isn't there from slot A
+	 * Should throw and exception
+	 */
+	@Test
+	public void testRemoveItemANull() {
+		try {
+<span class="nc" id="L194">			vm1.removeItem(&quot;A&quot;);</span>
+<span class="pc" id="L195">		} catch (VendingMachineException e) {</span>
+<span class="fc" id="L196">			exceptionThrown = true;</span>
+		}
+<span class="fc" id="L198">		assertTrue(exceptionThrown);</span>
+<span class="fc" id="L199">	}</span>
+	
+	/*
+	 * Testing removing an item that isn't there from slot B
+	 * Should throw and exception
+	 */
+	@Test
+	public void testRemoveItemBNull() {
+		try {
+<span class="nc" id="L208">			vm1.removeItem(&quot;B&quot;);</span>
+<span class="pc" id="L209">		} catch (VendingMachineException e) {</span>
+<span class="fc" id="L210">			exceptionThrown = true;</span>
+		}
+<span class="fc" id="L212">		assertTrue(exceptionThrown);</span>
+<span class="fc" id="L213">	}</span>
+	
+	/*
+	 * Testing removing an item that isn't there from slot C
+	 * Should throw and exception
+	 */
+	@Test
+	public void testRemoveItemCNull() {
+		try {
+<span class="nc" id="L222">			vm1.removeItem(&quot;C&quot;);</span>
+<span class="pc" id="L223">		} catch (VendingMachineException e) {</span>
+<span class="fc" id="L224">			exceptionThrown = true;</span>
+		}
+<span class="fc" id="L226">		assertTrue(exceptionThrown);</span>
+<span class="fc" id="L227">	}</span>
+	
+	/*
+	 * Testing removing an item that isn't there from slot D
+	 * Should throw and exception
+	 */
+	@Test
+	public void testRemoveItemDNull() {
+		try {
+<span class="nc" id="L236">			vm1.removeItem(&quot;D&quot;);</span>
+<span class="pc" id="L237">		} catch (VendingMachineException e) {</span>
+<span class="fc" id="L238">			exceptionThrown = true;</span>
+		}
+<span class="fc" id="L240">		assertTrue(exceptionThrown);</span>
+<span class="fc" id="L241">	}</span>
+	
+	/*
+	 * Testing removing an item with an invalid code
+	 * Should throw and exception
+	 */
+	@Test
+	public void testRemoveItemInvalidCode() {
+		try {
+<span class="nc" id="L250">			vm1.removeItem(&quot;X&quot;);</span>
+<span class="pc" id="L251">		} catch (VendingMachineException e) {</span>
+<span class="fc" id="L252">			exceptionThrown = true;</span>
+		}
+<span class="fc" id="L254">		assertTrue(exceptionThrown);</span>
+<span class="fc" id="L255">	}</span>
+	
+	/*
+	 * Testing inserting money
+	 * Should add the value entered
+	 */
+	@Test
+	public void testInsertMoney() {
+<span class="fc" id="L263">		vm1.insertMoney(3.25);</span>
+<span class="fc" id="L264">		assertEquals(balance + 3.25, vm1.getBalance(), .001);</span>
+<span class="fc" id="L265">	}</span>
+	
+	/*
+	 * Testing inserting money more than once
+	 * Should add all the values entered
+	 */
+	@Test
+	public void testInsertMoneyMultiple() {
+<span class="fc" id="L273">		vm1.insertMoney(3.25);</span>
+<span class="fc" id="L274">		vm1.insertMoney(4.0);</span>
+<span class="fc" id="L275">		vm1.insertMoney(2.6);</span>
+<span class="fc" id="L276">		balance = balance + 3.25 + 4.0 + 2.6;</span>
+<span class="fc" id="L277">		assertEquals(balance, vm1.getBalance(), .001);</span>
+<span class="fc" id="L278">	}</span>
+	
+	/*
+	 * Testing inserting negative money
+	 * Should throw an exception
+	 */
+	@Test
+	public void testInsertMoneyNegative() {
+		try {
+<span class="nc" id="L287">			vm1.insertMoney(-1.0);</span>
+<span class="pc" id="L288">		} catch (VendingMachineException e) {</span>
+<span class="fc" id="L289">			exceptionThrown = true;</span>
+		}
+<span class="fc" id="L291">	}</span>
+	
+	/*
+	 * Testing getting the balance
+	 * Should return current balance
+	 */
+	@Test
+	public void testGetBalanceZero() {
+<span class="fc" id="L299">		assertEquals(0, vm1.getBalance(), .001);</span>
+<span class="fc" id="L300">	}</span>
+	
+	/*
+	 * Testing getting the balance after adding money
+	 * Should return current balance
+	 */
+	@Test
+	public void testGetBalanceAdded() {
+<span class="fc" id="L308">		vm1.insertMoney(6.15);</span>
+<span class="fc" id="L309">		assertEquals(6.15, vm1.getBalance(), .001);</span>
+<span class="fc" id="L310">	}</span>
+	
+	/*
+	 * Testing if the balance updates correctly when making a purchase
+	 * Should return the current balance
+	 */
+	@Test
+	public void testMakePurchaseBalance() {
+<span class="fc" id="L318">		vm2.insertMoney(3.0);</span>
+<span class="fc" id="L319">		vm2.makePurchase(&quot;C&quot;);</span>
+<span class="fc" id="L320">		balance = balance + 3.0 - 1.5;</span>
+<span class="fc" id="L321">		assertEquals(balance, vm2.getBalance(), .001);</span>
+<span class="fc" id="L322">	}</span>
+	
+	/*
+	 * Testing if the item gets removed when making a purchase
+	 * Should successfully remove the item
+	 */
+	@Test
+	public void testMakePurchaseRemove() {
+<span class="fc" id="L330">		vm2.insertMoney(3.0);</span>
+<span class="fc" id="L331">		vm2.makePurchase(&quot;C&quot;);</span>
+<span class="fc" id="L332">		assertNull(vm2.getItem(&quot;C&quot;));</span>
+<span class="fc" id="L333">	}</span>
+	
+	/*
+	 * Testing if the makePurchase method correctly returns false when balance &lt; item price
+	 * Should not purchase the item (should return false)
+	 */
+	@Test
+	public void testMakePurchaseBalanceLow() {
+<span class="fc" id="L341">		assertFalse(vm2.makePurchase(&quot;C&quot;));</span>
+<span class="fc" id="L342">	}</span>
+	
+	/*
+	 * Testing making a purchase with invalid code
+	 * Should throw an exception
+	 */
+	@Test
+	public void testMakePurchaseInvalidCode() {
+		try {
+<span class="nc" id="L351">			vm1.makePurchase(&quot;X&quot;);</span>
+<span class="pc" id="L352">		} catch (VendingMachineException e) {</span>
+<span class="fc" id="L353">			exceptionThrown = true;</span>
+		}
+<span class="fc" id="L355">		assertTrue(exceptionThrown);</span>
+<span class="fc" id="L356">	}</span>
+	
+	/*
+	 * Testing if returnChange correctly sets balance to 0
+	 * Should set balance to 0
+	 */
+	@Test
+	public void testReturnChangeBalance() {
+<span class="fc" id="L364">		vm1.insertMoney(3.0);</span>
+<span class="fc" id="L365">		vm1.returnChange();</span>
+<span class="fc" id="L366">		assertEquals(0, vm1.getBalance(), .001);</span>
+<span class="fc" id="L367">	}</span>
+	
+	/*
+	 * Testing if returnChange returns the correct amount of change
+	 * Should return the correct amount of change
+	 */
+	@Test
+	public void testReturnChangeAmount() {
+<span class="fc" id="L375">		vm1.insertMoney(3.0);</span>
+<span class="fc" id="L376">		assertEquals(3.0, vm1.returnChange(), .001);</span>
+<span class="fc" id="L377">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span>VendingMachineP3-1 (Mar 16, 2016 3:52:19 PM)</div></body></html>
